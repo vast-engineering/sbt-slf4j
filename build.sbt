@@ -2,8 +2,6 @@ organization := "com.vast"
 
 name := "sbt-slf4j"
 
-version := "0.1.0-SNAPSHOT"
-
 scalaVersion := "2.10.4"
 
 libraryDependencies ++= Seq(
