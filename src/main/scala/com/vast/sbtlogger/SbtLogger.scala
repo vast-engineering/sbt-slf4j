@@ -11,12 +11,21 @@ object SbtLogger {
   def withLogger[T](l: sbt.Logger)(f: => T): T = {
     currentSbtLogger.withValue(Some(l))(f)
   }
+
+  private sealed trait LogLevel
+  private case object TRACE extends LogLevel
+  private case object DEBUG extends LogLevel
+  private case object INFO extends LogLevel
+  private case object WARN extends LogLevel
+  private case object ERROR extends LogLevel
+
 }
 
 class SbtLogger(sbtLogger: sbt.Logger) extends MarkerIgnoringBase with Logger {
 
-  import LogLevels._
+  import SbtLogger._
 
+  //TODO: Perhaps provide a way to configure this?
   override def isErrorEnabled: Boolean = true
   override def isWarnEnabled: Boolean = true
   override def isInfoEnabled: Boolean = true
@@ -53,22 +62,22 @@ class SbtLogger(sbtLogger: sbt.Logger) extends MarkerIgnoringBase with Logger {
   override def info(format: String, arguments: AnyRef*): Unit = formatAndLog(INFO, format, arguments)
   override def info(msg: String, t: Throwable): Unit = writeLogMessage(INFO, Some(msg), Some(t))
 
-  private def formatAndLog(level: LogLevels, format: String, arg: Any) {
+  private def formatAndLog(level: LogLevel, format: String, arg: Any) {
     val tuple = MessageFormatter.format(format, arg)
     writeLogMessage(level, Option(tuple.getMessage), Option(tuple.getThrowable))
   }
 
-  private def formatAndLog(level: LogLevels, format: String, arg1: Any, arg2: Any) {
+  private def formatAndLog(level: LogLevel, format: String, arg1: Any, arg2: Any) {
     val tuple = MessageFormatter.format(format, arg1, arg2)
     writeLogMessage(level, Option(tuple.getMessage), Option(tuple.getThrowable))
   }
 
-  private def formatAndLog(level: LogLevels, format: String, arguments: AnyRef*) {
+  private def formatAndLog(level: LogLevel, format: String, arguments: AnyRef*) {
     val tuple = MessageFormatter.arrayFormat(format, arguments.toArray)
     writeLogMessage(level, Option(tuple.getMessage), Option(tuple.getThrowable))
   }
 
-  private def writeLogMessage(level: LogLevels, message: Option[String], t: Option[Throwable] = None) {
+  private def writeLogMessage(level: LogLevel, message: Option[String], t: Option[Throwable] = None) {
 
     message.foreach { m =>
       level match {

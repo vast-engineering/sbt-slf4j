@@ -2,9 +2,9 @@ package org.slf4j.impl;
 
 
 import org.slf4j.ILoggerFactory;
-//import org.slf4j.spi.LoggerFactoryBinder;
+import org.slf4j.spi.LoggerFactoryBinder;
 
-public class StaticLoggerBinder {
+public class StaticLoggerBinder implements LoggerFactoryBinder {
     public static String REQUESTED_API_VERSION = "1.7"; // !final
 
     private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder();
