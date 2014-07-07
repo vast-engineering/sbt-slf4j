@@ -1,13 +1,12 @@
+import com.typesafe.sbt.SbtPgp
 import xerial.sbt.Sonatype.SonatypeKeys._
 
 lazy val SonatypePublish = config("sonatype")
 
 inConfig(SonatypePublish)(
   Defaults.baseClasspaths ++
-    sonatypeSettings ++
     Seq(
-      credentials := Seq(Credentials(Path.userHome / ".ivy2" / ".sonatype-credentials")),
-      profileName := "com.vast",
+      credentials += Credentials(Path.userHome / ".ivy2" / ".sonatype-credentials"),
       pomExtra := {
         <developers>
           <developer>
@@ -17,5 +16,7 @@ inConfig(SonatypePublish)(
           </developer>
         </developers>
       }
-    )
+    ) ++
+    SbtPgp.settings ++
+    sonatypeSettings :+ (profileName := "com.vast")
 )
