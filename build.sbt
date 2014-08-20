@@ -6,7 +6,7 @@ description := "An SLF4j backend that utilizes the SBT TaskStreams log."
 
 scalaVersion := "2.10.4"
 
-crossPaths := false
+javacOptions ++= Seq("-source", "1.6", "-target", "1.6") 
 
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.7",
@@ -22,7 +22,7 @@ startYear := Some(2014)
 scmInfo := Some(
   ScmInfo(
     url("https://github.com/vast-engineering/sbt-slf4j"),
-    "scm:git:github.com/vast-engineering/athena",
-    Some("scm:git:git@github.com:vast-engineering/athena")
+    "scm:git:github.com/vast-engineering/sbt-slf4j",
+    Some("scm:git:git@github.com:vast-engineering/sbt-slf4j")
   )
 )

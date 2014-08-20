@@ -12,7 +12,7 @@ To use this plugin, add the following to your build -
 
 ```scala
 ...
-addSbtPlugin("com.vast.sbt" % "sbt-sl4fj" % "0.2.0")
+libraryDependencies += "com.vast.sbt" %% "sbt-sl4fj" % "0.2.1"
 ...
 ```
 
