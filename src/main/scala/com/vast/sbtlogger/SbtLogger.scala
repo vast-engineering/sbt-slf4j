@@ -29,8 +29,8 @@ class SbtLogger(sbtLogger: sbt.Logger) extends MarkerIgnoringBase with Logger {
   override def isErrorEnabled: Boolean = true
   override def isWarnEnabled: Boolean = true
   override def isInfoEnabled: Boolean = true
-  override def isDebugEnabled: Boolean = false
-  override def isTraceEnabled: Boolean = false
+  override def isDebugEnabled: Boolean = true
+  override def isTraceEnabled: Boolean = true
 
   override def warn(msg: String): Unit = writeLogMessage(WARN, Some(msg))
   override def warn(format: String, arg: scala.Any): Unit = formatAndLog(WARN, format, arg)
